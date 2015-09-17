@@ -17,6 +17,8 @@ def launch_argv_with_fallbacks(commands, print_error=True):
 	for argv in commands:
 		ret = utils.spawn_async(argv)
 		if ret: return ret
+		else:
+			ret = utils.run_subprocess(argv)
 	pretty.print_error(__name__, "Unable to run command(s)", commands)
 	return False
 
@@ -54,6 +56,36 @@ class LockScreen (CommandLeaf):
 		return _("Enable screensaver and lock")
 	def get_icon_name(self):
 		return "system-lock-screen"
+
+class Hibernate(CommandLeaf):
+	"""Hibernate"""
+	def __init__(self, commands, name=None):
+		if not name: name = ("Hibernate")
+		CommandLeaf.__init__(self, commands, name)
+	def get_description(self):
+		return ("Hibernate computer")
+	def get_icon_name(self):
+		return "system-shutdown"
+
+class Suspend(CommandLeaf):
+	"""Suspend"""
+	def __init__(self, commands, name=None):
+		if not name: name = ("Suspend")
+		CommandLeaf.__init__(self, commands, name)
+	def get_description(self):
+		return ("Suspend computer")
+	def get_icon_name(self):
+		return "system-shutdown"
+
+class Reboot(CommandLeaf):
+	"""Reboot"""
+	def __init__(self, commands, name=None):
+		if not name: name = ("Reboot")
+		CommandLeaf.__init__(self, commands, name)
+	def get_description(self):
+		return ("Reboot computer")
+	def get_icon_name(self):
+		return "system-shutdown"
 
 class CommonSource (Source):
 	def __init__(self, name):
