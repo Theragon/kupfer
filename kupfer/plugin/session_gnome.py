@@ -8,17 +8,17 @@ from kupfer.plugin import session_support as support
 
 
 # sequences of argument lists
-LOGOUT_CMD = (["gnome-session-quit"])
+LOGOUT_CMD = (["gnome-session-quit --logout --no-prompt"])
 
-SHUTDOWN_CMD = (["/scripts/shutdown.sh"])
+SHUTDOWN_CMD = (["/usr/share/kupfer/scripts/shutdown.sh"])
 
-SUSPEND_CMD = (["/scripts/suspend.sh"])
+SUSPEND_CMD = (["/usr/share/kupfer/scripts/suspend.sh"])
 
-LOCKSCREEN_CMD = (["/scripts/lockscreen.sh"])
+LOCKSCREEN_CMD = (["/usr/share/kupfer/scripts/lockscreen.sh"])
 
-HIBERNATE_CMD = (["/scripts/hibernate.sh"])
+HIBERNATE_CMD = (["/usr/share/kupfer/scripts/hibernate.sh"])
 
-REBOOT_CMD = (["/scripts/reboot.sh"])
+REBOOT_CMD = (["/usr/share/kupfer/scripts/reboot.sh"])
 
 class GnomeItemsSource (support.CommonSource):
 	def __init__(self):

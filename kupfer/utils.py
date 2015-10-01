@@ -240,6 +240,12 @@ def spawn_async_raise(argv, workdir="."):
 	except gobject.GError as exc:
 		raise SpawnError(exc)
 
+def run_subprocess(command):
+	import subprocess
+	process = subprocess.Popen(command.split(), stdout=subprocess.PIPE)
+	output = process.communicate()[0]
+	return output
+
 def argv_for_commandline(cli):
 	return desktop_parse.parse_argv(cli)
 
