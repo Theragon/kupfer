@@ -31,5 +31,6 @@ class GnomeItemsSource (support.CommonSource):
 			support.Hibernate(HIBERNATE_CMD),
 			support.Suspend(SUSPEND_CMD),
 			support.Reboot(REBOOT_CMD),
+			support.Restart(REBOOT_CMD),
 		)
 

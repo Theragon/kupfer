@@ -87,6 +87,16 @@ class Reboot(CommandLeaf):
 	def get_icon_name(self):
 		return "system-shutdown"
 
+class Restart(CommandLeaf):
+	"""Restart"""
+	def __init__(self, commands, name=None):
+		if not name: name = ("Restart")
+		CommandLeaf.__init__(self, commands, name)
+	def get_description(self):
+		return ("Restart computer")
+	def get_icon_name(self):
+		return "system-shutdown"
+
 class CommonSource (Source):
 	def __init__(self, name):
 		super(CommonSource, self).__init__(name)
