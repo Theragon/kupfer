@@ -5,20 +5,25 @@ __version__ = "2009-12-05"
 __author__ = "Ulrik Sverdrup <ulrik.sverdrup@gmail.com>"
 
 from kupfer.plugin import session_support as support
+import os
+import pwd
 
-
+username = pwd.getpwuid(os.getuid())[0]
 # sequences of argument lists
 LOGOUT_CMD = (["gnome-session-quit --logout --no-prompt"])
 
-SHUTDOWN_CMD = (["/usr/share/kupfer/scripts/shutdown.sh"])
+SHUTDOWN_CMD_OLD = (["/home/" + username + "/scripts/shutdown.sh"])
+SHUTDOWN_CMD = (["/home/" + username + "/scripts/shutdown2.sh"])
 
-SUSPEND_CMD = (["/usr/share/kupfer/scripts/suspend.sh"])
+SUSPEND_CMD_OLD = (["/home/" + username + "/scripts/suspend.sh"])
+SUSPEND_CMD = (["/home/" + username + "/scripts/suspend.sh"])
 
-LOCKSCREEN_CMD = (["/usr/share/kupfer/scripts/lockscreen.sh"])
+LOCKSCREEN_CMD = (["/home/" + username + "/scripts/lockscreen.sh"])
 
-HIBERNATE_CMD = (["/usr/share/kupfer/scripts/hibernate.sh"])
+HIBERNATE_CMD = (["/home/" + username + "/scripts/hibernate.sh"])
 
-REBOOT_CMD = (["/usr/share/kupfer/scripts/reboot.sh"])
+REBOOT_CMD_OLD = (["/home/" + username + "/scripts/reboot.sh"])
+REBOOT_CMD = (["/home" + username + "/scripts/reboot.sh"])
 
 class GnomeItemsSource (support.CommonSource):
 	def __init__(self):
