@@ -117,13 +117,16 @@ class AsyncCommand (object):
 		self.finished = False
 		self.finish_callback = finish_callback
 
+		pretty.print_debug(__name__, "argv: %s" % argv)
 		argv = _argv_to_locale(argv)
 		pretty.print_debug(__name__, "AsyncCommand:", argv)
 
+		pretty.print_debug(__name__, "env: %s" % env)
 		flags = (glib.SPAWN_SEARCH_PATH | glib.SPAWN_DO_NOT_REAP_CHILD)
 		pid, stdin_fd, stdout_fd, stderr_fd = \
-		     glib.spawn_async(argv, standard_output=True, standard_input=True,
-		                      standard_error=True, flags=flags, envp=env)
+				glib.spawn_async(argv)
+		#     glib.spawn_async(argv, standard_output=True, standard_input=True,
+		#                      standard_error=True, flags=flags, envp=env)
 
 		if stdin:
 			self.stdin[:] = self._split_string(stdin, self.max_input_buf)
