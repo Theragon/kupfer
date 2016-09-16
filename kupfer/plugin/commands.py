@@ -4,6 +4,7 @@ __kupfer_actions__ = (
 		"PassToCommand",
 		"FilterThroughCommand",
 		"WriteToCommand",
+		"RunWithArgs",
 	)
 __kupfer_text_sources__ = ("CommandTextSource",)
 __description__ = _(u"Run command-line programs. Actions marked with"
@@ -88,8 +89,8 @@ class PassToCommand (Action):
 			self._run_command(objs, iobj, ctx)
 
 	def item_types(self):
-		yield TextLeaf
 		yield FileLeaf
+		yield TextLeaf
 
 	def requires_object(self):
 		return True
@@ -100,6 +101,63 @@ class PassToCommand (Action):
 
 	def valid_object(self, iobj, for_item=None):
 		if isinstance(iobj, Command):
+			return True
+		return not iobj.is_dir() and os.access(iobj.object, os.X_OK | os.R_OK)
+
+	def get_description(self):
+		return _("Run program with object as an additional parameter") + \
+		        u" \N{GEAR}"
+
+
+class RunWithArgs (Action):
+	def __init__(self):
+		# TRANS: The user starts a program (command) and the text
+		# TRANS: is an argument to the command
+		Action.__init__(self, _("Run with arguments"))
+
+	def wants_context(self):
+		return True
+
+	def activate(self, leaf, iobj, ctx):
+		self.activate_multiple((leaf,),(iobj, ), ctx)
+
+	def _run_command(self, objs, iobj, ctx):
+		if isinstance(iobj, Command):
+			argv = ['sh', '-c', iobj.object + ' "$@"', '--']
+			pretty.print_debug(__name__, "if argv: %s" % argv)
+		else:
+			argv = [objs]
+			pretty.print_debug(__name__, "else argv: %s" % argv)
+
+		def finish_callback(acommand, stdout, stderr):
+			finish_command(ctx, acommand, stdout, stderr, False)
+
+		pretty.print_debug(__name__, "iobj: %s" % iobj)
+		argv.extend([o for o in iobj])
+		pretty.print_debug(__name__, "Spawning without timeout")
+		utils.AsyncCommand(argv, finish_callback, None)
+
+	def activate_multiple(self, cmd, args, ctx):
+		pretty.print_debug(__name__, "cmd: %s args[0]: %s" % (cmd, args[0].object))
+		self._run_command(cmd[0].object, args[0].object.split(), ctx)
+		#for iobj in iobjs:
+
+	def item_types(self):
+		pretty.print_debug(__name__, "item_types")
+		yield TextLeaf
+		yield FileLeaf
+
+	def requires_object(self):
+		return True
+
+	def object_types(self):
+		pretty.print_debug(__name__, "object_types")
+		#yield Command
+		#yield FileLeaf
+		yield TextLeaf
+
+	def valid_object(self, iobj, for_item=None):
+		if isinstance(iobj, Command) or isinstance(iobj, TextLeaf):
 			return True
 		return not iobj.is_dir() and os.access(iobj.object, os.X_OK | os.R_OK)
 
