@@ -12,8 +12,8 @@ username = pwd.getpwuid(os.getuid())[0]
 # sequences of argument lists
 LOGOUT_CMD = (["gnome-session-quit --logout --no-prompt"])
 
-SHUTDOWN_CMD_OLD = (["/home/" + username + "/scripts/shutdown.sh"])
-SHUTDOWN_CMD = (["/home/" + username + "/scripts/shutdown2.sh"])
+SHUTDOWN_CMD_OLD = (["/home/" + username + "/scripts/shutdown2.sh"])
+SHUTDOWN_CMD = (["/home/" + username + "/scripts/shutdown.sh"])
 
 SUSPEND_CMD_OLD = (["/home/" + username + "/scripts/suspend.sh"])
 SUSPEND_CMD = (["/home/" + username + "/scripts/suspend.sh"])
@@ -23,7 +23,7 @@ LOCKSCREEN_CMD = (["/home/" + username + "/scripts/lockscreen.sh"])
 HIBERNATE_CMD = (["/home/" + username + "/scripts/hibernate.sh"])
 
 REBOOT_CMD_OLD = (["/home/" + username + "/scripts/reboot.sh"])
-REBOOT_CMD = (["/home" + username + "/scripts/reboot.sh"])
+REBOOT_CMD = (["/home/" + username + "/scripts/reboot.sh"])
 
 class GnomeItemsSource (support.CommonSource):
 	def __init__(self):
